@@ -1,26 +1,23 @@
 #### Preamble ####
-# Purpose: Downloads and saves the data from [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Add the instructions to download the raw dataset that are used to fit the model used in the paper analysis
+# Author: Wanling Ma
+# Date: 3 April 2024
+# Contact: wanling.ma@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
 
 
 #### Workspace setup ####
-library(opendatatoronto)
-library(tidyverse)
-# [...UPDATE THIS...]
 
 #### Download data ####
-# [...ADD CODE HERE TO DOWNLOAD...]
-
-
 
 #### Save data ####
-# [...UPDATE THIS...]
-# change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(the_raw_data, "inputs/data/raw_data.csv") 
-
+# 1. To download the age distribution dataset, visit the website
+#    https://ourworldindata.org/explorers/population-and-demography?country=~USA&Metric=Population+by+broad+age+group&Sex=Both+sexes&Age+group=Total&Projection+Scenario=None 
+#    and click the download button at the bottom right corner.
+# 2. To download the enrollment rate dataset, visit the website
+#    https://ourworldindata.org/grapher/gross-enrollment-ratio-in-tertiary-education?country=~USA
+#    and click the download button at the bottom right corner.
+# 3. To download the fertility rate dataset, visit the website
+#    https://ourworldindata.org/explorers/population-and-demography?facet=none&Metric=Fertility+rate&Sex=Both+sexes&Age+group=Total&Projection+Scenario=None&country=~USA
+#    and click the download button at the bottom right corner.
          
