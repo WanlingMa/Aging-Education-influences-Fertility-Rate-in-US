@@ -20,6 +20,7 @@ bibliography: references.bib
 # Load necessary libraries
 library(dplyr)
 library(ggplot2)
+library(jtools)
 library(tidyr)
 library(car)
 library(tidyverse)
@@ -193,8 +194,6 @@ In this section, we constructed a linear regression model aimed at revealing the
 #| eval: true
 #| warning: false
 #| message: false
-# Load necessary libraries
-library(tidyverse)
 
 age_distribution_data <- filtered_data %>%
   group_by(Year) %>%
@@ -253,7 +252,7 @@ This section presents the outcomes of the linear regression model, offering insi
 #| label: tbl-modelresults
 #| tbl-cap: "Model Summary of the linear regression model between fertility rate and working age population percentage and tertiary education enrollment rate"
 #| warning: false
-library(jtools)
+
 summ(model)
 ```
 
@@ -305,6 +304,8 @@ To address the identified weaknesses, future research should consider exploring 
 #| eval: true
 #| warning: false
 #| message: false
+#| label: fig-model-diag
+#| fig-cap: "Model Diagnostic Figures"
 plot(model)
 ```
 \newpage
