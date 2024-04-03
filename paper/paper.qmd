@@ -48,13 +48,17 @@ This section provides an overview and analysis of datasets concerning the United
 
 ## Data Source
 
-The datasets utilized in this analysis are sourced from the United Nations for age distribution and fertility rates, and the World Bank for tertiary education enrollment rates and GDP per capita trends. Specifically, demographic data are courtesy of the @UN_WPP2022, while education and economic data are extracted from the @WorldBankEdStats2023, respectively. These sources provide a reliable and authoritative foundation for examining changes in the United States over 1990 to 2020.
+The datasets utilized in this analysis are sourced from the United Nations for age distribution and fertility rates, and the World Bank for tertiary education enrollment rates. Specifically, demographic data are courtesy of the @UN_WPP2022, while education and economic data are extracted from the @WorldBankEdStats2023, respectively. These sources provide a reliable and authoritative foundation for examining changes in the United States over 1990 to 2020.
 
 ## Data Clean and Processing
 
 The initial data processing is conducted by @OurWorldInData, a project committed to making comprehensive datasets understandable and widely accessible. @OurWorldInData had already undertaken extensive work to standardize this data for global comparability, calculate derived metrics such as per capita figures, and ensure the coherence of metadata across a variety of data types.
 
-After @OurWorldInData's processing, we further processed the data using R programming [@citeR]. This involved reading raw data files into data frames, filtering the datasets to include only the United States from 1990 to 2020 using functions from `dplyr` packages [@citeDplyr]. Additionally, we leveraged the ggplot2 package to create visual representations of these trends, such as stacked area charts for population distribution by age groups, line graphs for the fertility rate and GDP per capita trends, and a line chart for tertiary education enrollment rates [@citeGgplot2]. 
+After @OurWorldInData's processing, we further processed the data using R programming [@citeR]. This involved reading raw data files into data frames, filtering the datasets to include only the United States from 1990 to 2020 using functions from `dplyr` packages [@citeDplyr]. Additionally, we leveraged the ggplot2 package to create visual representations of these trends, such as stacked area charts for population distribution by age groups, line graphs for the fertility rate, and a line chart for tertiary education enrollment rates [@citeGgplot2]. 
+
+## Measurement
+
+The datasets were collected and measured using authoritative sources, primarily the United Nations and the World Bank. The United Nations Department of Economic and Social Affairs Population Division offers detailed demographic data, including age distribution and fertility rates, through regular population surveys and censuses conducted in member countries. Similarly, the World Bank compiles education and economic indicators, such as tertiary education enrollment rates, from official national and international statistical sources. This rigorous data collection and measurement process involves data cleaning, validation, and standardization efforts to facilitate global comparability and to address discrepancies in data reporting standards across countries.
 
 ## Variables of Interest
 
