@@ -1,15 +1,14 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "The Impact of Aging Population and Education Attainment on Fertility Rate in US over 1990 to 2020"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Wanling Ma
+thanks: "Code and data are available at: https://github.com/WanlingMa/The-Impact-of-Aging-Population-and-Education-Attainment-on-Fertility-Rate-in-US-over-1990-to-2020"
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper investigates the relationship between the aging population rate, educational attainment, and fertility rates in the United States over a thirty-year period from 1990 to 2020. Through a detailed analysis using data from the United Nations and the World Bank, we found that higher educational attainment is associated with lower fertility rates, while an increase in the working-age population percentage positively affects fertility. These findings highlight the significant impact of demographic and educational shifts on the nation's fertility trends. Understanding these dynamics is crucial for developing policies that address the challenges and opportunities of an evolving society."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib
 ---
 
@@ -18,139 +17,280 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(car)
 library(tidyverse)
-library(palmerpenguins)
+library(zoo)
 ```
 
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. We use @citeR and @rohan.
+In the last three decades, the United States has experienced significant demographic transformations characterized by an aging population and rising levels of educational attainment. This study delves into the relationship between these two pivotal trends and their collective impact on fertility rates from 1990 to 2020. By utilizing data from the United Nations and the World Bank, the research examines how the rate of population aging and the increasing educational achievements within the society have influenced fertility decisions. The investigation addresses a critical gap in understanding the dual influence of demographic aging and educational elevation on fertility dynamics.
 
-The remainder of this paper is structured as follows. @sec-data....
+The findings of this study are revealing. Analysis through a linear regression model indicates a distinct inverse relationship between the fertility rate and educational attainment: as the average level of education rises, fertility rates tend to decline. This trend suggests that higher education may contribute to delayed family planning and a reduction in the number of children per family. Additionally, this paper reveals that the increase in the working-age population percentage is positively associated with higher fertility rates. This correlation implies that, conversely, an aging population tends to have a negative impact on fertility rates.
 
+This paper advocates for targeted policy interventions to mitigate the potential socioeconomic challenges posed by these trends. Recommendations include the development of policies that support work-life balance, enabling individuals to pursue higher education and career goals without forgoing family aspirations. Furthermore, the paper underscores the necessity for social policies that address the needs of an aging population, ensuring sustainable demographic and economic growth.
 
+The paper is organized into sections covering [Data], [Model], [Results], and [Discussions]. The [Data] section outlines our utilization of datasets from the United Nations and the World Bank, including our methodologies for data selection, cleaning, and the challenges encountered. The [Model] section introduces our linear regression analysis, detailing the construction and justification of the model used to examine the impact of the aging population rate and educational attainment on fertility rates. In the [Results] section, we disclose our principal discoveries, highlighting the positive impact of the working-age population percentage on fertility rates and the inverse relationship between educational attainment and fertility. Finally, the [Discussions] section melds our findings with the existing body of research, interpreting the implications of these trends and suggesting avenues for future investigations that further explore these complex relationships.
+
+## Estimand
+
+Our estimand is the effect of the aging population rate and educational attainment on fertility rates in the United States from 1990 to 2020. We seek to quantify how shifts in the demographic composition, particularly the proportion within the working-age bracket, alongside rising levels of education, impact the number of children born per woman. This focus is pivotal to our analysis, enabling us to elucidate the interplay between demographic aging, educational progress, and fertility trends.
 
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+This section provides an overview and analysis of datasets concerning the United States from 1990 to 2020, focusing on age distribution, education achievements and fertility rate. Sourced from the @UN_WPP2022 and @WorldBankEdStats2023, these datasets have then been processed by Our World in Data to ensure accuracy, comparability, and relevancy.
+
+## Data Source
+
+The datasets utilized in this analysis are sourced from the United Nations for age distribution and fertility rates, and the World Bank for tertiary education enrollment rates and GDP per capita trends. Specifically, demographic data are courtesy of the @UN_WPP2022, while education and economic data are extracted from the @WorldBankEdStats2023, respectively. These sources provide a reliable and authoritative foundation for examining changes in the United States over 1990 to 2020.
+
+## Data Clean and Processing
+
+The initial data processing is conducted by @OurWorldInData, a project committed to making comprehensive datasets understandable and widely accessible. @OurWorldInData had already undertaken extensive work to standardize this data for global comparability, calculate derived metrics such as per capita figures, and ensure the coherence of metadata across a variety of data types.
+
+After @OurWorldInData's processing, we further processed the data using R programming [@citeR]. This involved reading raw data files into data frames, filtering the datasets to include only the United States from 1990 to 2020 using functions from `dplyr` packages [@citeDplyr]. Additionally, we leveraged the ggplot2 package to create visual representations of these trends, such as stacked area charts for population distribution by age groups, line graphs for the fertility rate and GDP per capita trends, and a line chart for tertiary education enrollment rates [@citeGgplot2]. 
+
+## Variables of Interest
+
+### Age Distribution
+
+The age distribution dataset, as illustrated by @fig-ages, outlines the population distribution across three age groups in the United States from 1990 to 2020. It categorizes the population into Young Dependents (age 0 - 24), Working Age (age 25-64), and Elderly Dependents (age 65+), providing specific counts for each group alongside the total population and the percentage share of each category per year.
+
+We observed a gradual increase in the percentage of Elderly Dependents from 14.4% in 1990 to 17.6% in 2020, indicating an aging population. Conversely, the proportion of Young Dependents has decreased from 35.0% to 30.6% in the same period, reflecting potential shifts in birth rates and family planning trends. The Working Age group has seen slight fluctuations but generally maintained a steady share of the population, peaking at 52.9% in multiple years before slightly decreasing to 51.8% by 2020. This dataset highlights significant demographic trends, including an aging society and changes in the workforce's size relative to dependents.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
 #| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
+#| eval: true
 #| warning: false
 #| message: false
+#| label: fig-ages
+#| fig-cap: "Population Distribution by Age Groups in the United States (1990-2020)"
 
-analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
+# Read the CSV file into a dataframe
+data <- read.csv("../data/raw_data/age-distribution.csv")
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
+# Filter the data for the United States and years 1990 to 2020
+filtered_data <- data %>%
+  filter(Country.name == "United States" & Year >= 1990 & Year <= 2020) %>%
+  mutate(X65..years = ifelse(is.na(`X65..years`), 0, `X65..years`),
+         X25.64.years = ifelse(is.na(`X25.64.years`), 0, `X25.64.years`),
+         X15.24.years = ifelse(is.na(`X15.24.years`), 0, `X15.24.years`),
+         X5.14.years = ifelse(is.na(`X5.14.years`), 0, `X5.14.years`),
+         Under.5s = ifelse(is.na(Under.5s), 0, Under.5s)) %>%
+  mutate(Young.Dependents = `X5.14.years` + `X15.24.years` + Under.5s,
+         Working.Age = `X25.64.years`,
+         Elderly.Dependents = `X65..years`) %>%
+  select(Country.name, Year, Young.Dependents, Working.Age, Elderly.Dependents) %>%
+  pivot_longer(cols = c("Young.Dependents", "Working.Age", "Elderly.Dependents"), 
+               names_to = "AgeGroup", values_to = "Population")
+
+# Calculate the total population and percentage for the new categories
+filtered_data <- filtered_data %>%
+  group_by(Year) %>%
+  mutate(Total.Population = sum(Population)) %>%
+  ungroup() %>%
+  mutate(Percentage = (Population / Total.Population) * 100)
+
+# Plot the data as a stacked area chart
+ggplot(filtered_data, aes(x = Year, y = Percentage, fill = AgeGroup)) +
+  geom_area(position = 'stack', alpha=0.6) +
+  scale_fill_manual(values = c("Young.Dependents" = "skyblue", "Working.Age" = "forestgreen", "Elderly.Dependents" = "salmon"),
+                    labels = c("Young Dependents (0-24)", "Working Age (25-64)", "Elderly Dependents (65+)")) +
   theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
+  labs(x = "Year",
+       y = "Percentage",
+       fill = "Age Group") +
+  scale_x_continuous(breaks = seq(1990, 2020, 5))
+
 ```
 
-Talk way more about it. 
+### Education Achievements
+
+The education achievements dataset, visualized by the @fig-education-levels, presents the tertiary education enrollment rate in the United States from 1990 to 2020. Notably, the data reveals a general upward trend in enrollment rates, starting from 69.67681% in 1990 and peaking at 88.88941% in 2015, before slightly declining to 87.56766% by 2020. The dataset highlights significant growth in tertiary education participation, reflecting an increasing value placed on higher education in the U.S. over the period analyzed.
+
+There is a noticeable dip in enrollment rate to 70.50774% in 1998, following a period of steady increases. This decline is an anomaly within an otherwise consistent upward trajectory. Following this dip, the rates resumed their increase, suggesting a temporary setback rather than a long-term trend. The data underscores the fluctuating yet overall positive trajectory of tertiary education enrollment in the U.S., emphasizing the nation's emphasis on higher education as a key component of societal progress.
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-education-levels
+#| fig-cap: "Tertiary Education Enrollment Rate in the United States (1990-2020)"
+
+# Read the new dataset into a dataframe
+education_data <- read.csv("../data/raw_data/gross-enrollment-ratio-in-tertiary-education.csv")
+
+# Filter the dataset for the United States and the years 1990 to 2020
+# Correctly reference the modified column name for enrollment rate
+us_education_data <- education_data %>%
+  filter(Entity == "United States" & Year >= 1990 & Year <= 2020) %>%
+  select(Entity, Year, EnrollmentRate = `School.enrollment..tertiary....gross.`)
+
+# Interpolate data to fill 1990 to 2020 for further usage
+us_education_data <- us_education_data[order(us_education_data$Year),]
+complete_years <- data.frame(Year = 1990:2020)
+complete_years$Entity <- "United States"
+full_dataset <- merge(complete_years, us_education_data, by = c("Year", "Entity"), all.x = TRUE)
+full_dataset$EnrollmentRate <- na.approx(full_dataset$EnrollmentRate, na.rm = FALSE)
+us_education_data <- full_dataset
+
+# Plot the enrollment rate over the years
+ggplot(us_education_data, aes(x = Year, y = EnrollmentRate)) +
+  geom_line(color = "blue") +  # Line graph to show trend
+  scale_y_continuous(limits = c(50, 100), breaks = seq(50, 100, by = 10)) + 
+  theme_minimal() +  # Clean theme
+  labs(x = "Year",
+       y = "Enrollment Rate (%)")  # Adding labels
+
+```
+
+### Fertility Rate
+
+From @fig-fertility-rate, we can see that this dataset charts the fertility rate trend in the United States from 1990 to 2020, showing the average number of children born per woman during this period. The initial rate in 1990 stood at 2.0692 children per woman, experiencing slight fluctuations through the decades, peaking at 2.1118 in 2007, and then demonstrating a notable decline to 1.6428 by 2020. This progression indicates a significant shift in family planning and societal trends, with the fertility rate decreasing below the replacement level of approximately 2.1 children per woman, which is generally considered necessary to maintain a stable population level.
+
+An interesting observation from the dataset is the steady decline in fertility rates post-2007, coinciding with the global financial crisis, suggesting potential economic influences on family planning decisions. The decline becomes more pronounced in the last decade, highlighting a trend towards smaller family sizes in the U.S. This data not only reflects changes in societal norms and economic conditions but also underscores potential long-term demographic shifts, with implications for policy, social services, and economic planning.
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-fertility-rate
+#| fig-cap: "Fertility Rate Trend in the United States (1990-2020)"
+
+# Read the dataset into a dataframe
+fertility_data <- read.csv("../data/raw_data/fertility-rate.csv")
+
+# Filter for the United States and select relevant columns using the modified column names
+us_fertility_data <- fertility_data %>%
+  filter(`Country.name` == "United States" & Year >= 1990 & Year <= 2020) %>%
+  select(`Country.name`, Year, `Fertility.rate..children.per.woman`)
+
+# Plot the trend of 'Fertility rate: children per woman' over the years
+ggplot(us_fertility_data, aes(x = Year, y = `Fertility.rate..children.per.woman`)) +
+  geom_line(color = "darkgreen") +  # Trend line
+  geom_point(color = "orange") +  # Data points
+  theme_minimal() +  # Clean theme
+  labs(x = "Year",
+       y = "Fertility Rate (children per woman)")
+
+```
 
 
 
 # Model
 
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
+In this section, we constructed a linear regression model aimed at revealing the relationship between fertility rates and two independent factors: the working age population percentage and tertiary education enrollment rate in the United States from 1990 to 2020. The subsequent paragraphs will outline the setup of our model, including the selection of variables and the statistical methods employed, followed by a justification for choosing linear regression as the analytical framework to examine these dynamics.
 
 ```{r}
 #| echo: false
 #| eval: true
 #| warning: false
 #| message: false
+# Load necessary libraries
+library(tidyverse)
 
-library(rstanarm)
+age_distribution_data <- filtered_data %>%
+  group_by(Year) %>%
+  summarize(Young.Dependents.Percentage = sum(Percentage[AgeGroup == "Young.Dependents"]),
+            Working.Age.Percentage = sum(Percentage[AgeGroup == "Working.Age"]),
+            Elderly.Dependents.Percentage = sum(Percentage[AgeGroup == "Elderly.Dependents"])) %>%
+  ungroup()
 
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
+# Ensure that 'us_education_data' and 'us_fertility_data' are correctly filtered and ready for merging
+# Merging the datasets on 'Year'
+combined_data <- merge(x = age_distribution_data, y = us_education_data, by = "Year")
+combined_data <- merge(x = combined_data, y = us_fertility_data, by = "Year", all.x = TRUE)
+
+combined_data <- combined_data %>%
+  rename(FertilityRate = `Fertility.rate..children.per.woman`,
+         EnrollmentRate = EnrollmentRate)
+
+# Then, fit a linear regression model
+model <- lm(FertilityRate ~ Working.Age.Percentage + EnrollmentRate, data = combined_data)
 ```
+
+## Model set-up
+
+The linear regression model we propose is designed to quantify how the working age population percentage and the tertiary education enrollment rate impact the fertility rate. The model is structured as follows:
+
+$$
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \epsilon
+$$
+
+where:
+
+- $Y$ represents the Fertility Rate, our dependent variable.
+- $X_1$ is the Working Age Population Percentage.
+- $X_2$ is the Tertiary Education Enrollment Rate.
+- $\beta_0$ is the intercept of the model, indicating the expected value of $Y$ when $X_1 = X_2 = 0$.
+- $\beta_1$ and $\beta_2$ are the coefficients for $X_1$ and $X_2$ respectively, indicating the expected change in $Y$ for a one-unit increase in $X_1$ or $X_2$, keeping the other variable constant.
+- $\epsilon$ represents the error term, capturing the deviation of the predicted values from the actual values.
+
+The independent variables of the model are the Working Age Population Percentage ($X_1$) and the Tertiary Education Enrollment Rate ($X_2$), while the dependent variable is the Fertility Rate ($Y$), reflecting the average number of children born per woman.
+
+### Model justification
+
+Choosing linear regression for our analysis is based on a hypothesis that both the percentage of the working-age population and the tertiary education enrollment rate have linear relationships with the fertility rate. The datasets on fertility trends, tertiary education enrollment, and age distribution in the United States from 1990 to 2020 suggest potential correlations. As the working-age population ratio decreases, a corresponding decline in the fertility rate is observed, suggesting a potential positive linear correlation. Conversely, within the same time frame, the tertiary education enrollment rate moves in the opposite direction compared to the fertility rate, indicating a negative linear correlation. Because of the hypothesis that there are linear relationships between dependent and independent variables, linear regression model is a suitable choice due to its simplicity and efficacy in revealing direct relationships and its capacity for prediction. 
+
+The model's output reinforces its suitability. The significant p-value for the tertiary education enrollment rate ($p < 0.001$) indicates a robust inverse relationship with the fertility rate, aligning with expectations that higher education levels could lead to lower fertility rates due to factors like career prioritization and delayed family planning. The working age population percentage, while not statistically significant, offers valuable insights into demographic shifts' potential impacts. The model's high $R^2$ value (70.05%) further justifies linear regression, suggesting that a significant portion of the variance in fertility rates is explained by these variables. Additionally, the Variance Inflation Factor (VIF) values below 5 indicate minimal multicollinearity, affirming the model's reliability.
+
+# Results
+
+This section presents the outcomes of the linear regression model, offering insights into the relationship between fertility rates and our predictors: the working age population percentage and the tertiary education enrollment rate. We'll explore the model's coefficients, assess its assumptions through diagnostic plots, and examine potential multicollinearity among predictors.
+
+## Model Analysis {#model-analysis}
 
 ```{r}
 #| echo: false
 #| eval: true
 #| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
+#| tbl-cap: "Model Summary of the linear regression model between fertility rate and working age population percentage and tertiary education enrollment rate"
 #| warning: false
-
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+library(jtools)
+summ(model)
 ```
 
+From @tbl-modelresults, we can see that the linear regression model demonstrates a significant fit to the data across 31 observations. With an F-statistic of 24.42 and a p-value less than 0.01, the model significantly explains variations in the fertility rate, indicating that the independent variables collectively have a meaningful impact. The model accounts for 64% of the variance in fertility rates (R² = 0.64), with an adjusted R² of 0.61, adjusting for the number of predictors, thus confirming a good fit and the model's explanatory power.
 
+Examining the coefficients, the working age population percentage shows a positive impact on the fertility rate (Est. = 0.09, $p < 0.01$), suggesting that as the proportion of the working-age population increases, so does the fertility rate. Conversely, the tertiary education enrollment rate negatively influences the fertility rate (Est. = -0.02, $p < 0.01$), indicating that higher enrollment rates are associated with lower fertility rates. These findings align with theoretical expectations, underscoring the significant and inverse relationship between education levels and fertility, while also highlighting the positive correlation between the size of the working-age population and fertility.
 
 
 # Discussion
 
-## First discussion point {#sec-first-point}
+## The Influence of Educational Attainment on Fertility Decisions {#sec-first-point}
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+According to the [Model Analysis] section, we can see that higher educational attainment shows a positive impact on the fertility rate. @wineberg1988 analyzed the United States Current Population Survey and highlighted that education influences the timing of fertility, particularly the timing of the first three births among once-married white women. This relationship has remained relatively stable over time, indicating that higher education levels lead to later family formation and smaller family sizes due to prioritization of career and personal development goals.
 
-## Second discussion point
+The shift towards delayed childbearing among highly educated women aligns with broader societal changes and individual aspirations for career development before starting a family. @kravdal2008 observed a significant decrease in the negative relationship between completed fertility and educational level over time, particularly among women. This change suggests an evolving landscape where family-friendly policies and the increased availability of quality daycare have mitigated the adverse effects of higher education on fertility.
 
-## Third discussion point
+Furthermore, the convergence of childlessness rates between educational subgroups in the United States reflects changing norms and realities. @rybinska2020 found that childlessness rates are declining among women with tertiary education, indicating a shift towards achieving both educational and family goals. This trend suggests a closing gap in childlessness across educational subgroups, driven by a combination of societal, economic, and policy changes that support family formation alongside educational attainment.
+
+Lastly, the role of education in shaping fertility desires and expectations cannot be overlooked. @verweij2019 emphasized that higher educated and working women do not necessarily desire to remain childless. Instead, constraints related to education and occupation lead to postponement of childbearing, challenging the notion that higher education directly correlates with a desire for childlessness. This insight calls for a reevaluation of how educational opportunities and career aspirations impact fertility decisions and the importance of supportive policies to help women realize their fertility desires.
+
+In conclusion, the influence of educational attainment on fertility decisions encapsulates a multifaceted interaction between individual choices, societal norms, and policy environments. As education continues to play a pivotal role in shaping life trajectories, understanding its impact on fertility provides crucial insights for policymakers, educators, and society at large.
+
+## Socio-Demographic Shifts: Implications for Policy and Society
+
+The aging population and its impact on the workforce and social services are significant concerns. @lutz2001 highlighted the momentum in demographic shifts due to historical fertility trends. In the United States, the aging of the baby boomer generation and below-replacement fertility rates among native-born populations are reshaping the demographic structure, emphasizing the need for policies that address the challenges of an aging workforce and social security sustainability.
+
+The educational attainment spectrum's expansion poses both challenges and opportunities for the economy. @zajacova2012 detailed the health differentials across educational levels among U.S. working-age adults, revealing stark disparities. These findings suggest that as the educational landscape diversifies, so too does the need for health policies that address these disparities and support the well-being of all educational subgroups, thus contributing to a more productive and healthy workforce.
+
+The decline in fertility rates and its implications for future population growth are also of concern. @beaujouan2019 examined the gap between lifetime fertility intentions and completed fertility, finding that women often have fewer children than they intend. This gap, influenced by socio-economic factors and policy environments, calls for a reevaluation of family support policies to better align with contemporary fertility behaviors and aspirations, ensuring sustainable population growth.
+
+Finally, the changing dynamics of education and labor participation among women highlight the evolving role of women in the economy. @mcclamroch1996 studied the relationships between total fertility rate, women's education, and labor participation, suggesting that as women attain higher education levels and participate more in the workforce, fertility patterns shift. This underscores the importance of policies that support work-family balance, enabling women to fulfill both career and family aspirations without compromising on either front.
 
 ## Weaknesses and next steps
 
-Weaknesses and next steps should also be included.
+The analysis presented in this paper reveals that the linear regression model has its limitations. According to the [Model Diagnostics] section, the model's residuals versus fitted values figure do not scatter perfectly around the zero line, suggesting that the linear relationship does not fully capture the complexity of these interactions. This discrepancy points to potential weaknesses in the model's ability to account for the nuanced and multifaceted nature of fertility decisions, highlighting the need for further refinement.
+
+To address the identified weaknesses, future research should consider exploring alternative statistical frameworks beyond linear regression. Such approaches could include non-linear models or machine learning techniques that can accommodate more complex relationships and interactions between variables. Additionally, incorporating a broader set of variables, such as socio-economic factors, cultural influences, and individual preferences, may provide a more comprehensive understanding of fertility behaviors. Expanding the model in these ways will not only improve its analytical capacity but also offer richer insights into the dynamics of fertility decision-making.
 
 \newpage
 
@@ -158,61 +298,15 @@ Weaknesses and next steps should also be included.
 
 # Appendix {-}
 
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
+# Model Diagnostics {#sec-model-diagnostics}
 
 ```{r}
 #| echo: false
 #| eval: true
-#| message: false
 #| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
+#| message: false
+plot(model)
 ```
-
-
-
 \newpage
 
 
