@@ -5,7 +5,7 @@ author:
 thanks: "Code and data are available at: https://github.com/WanlingMa/The-Impact-of-Aging-Population-and-Education-Attainment-on-Fertility-Rate-in-US-over-1990-to-2020"
 date: today
 date-format: long
-abstract: "This paper investigates the relationship between the aging population rate, educational attainment, and fertility rates in the United States over a thirty-year period from 1990 to 2020. Through a detailed analysis using data from the United Nations and the World Bank, we found that higher educational attainment is associated with lower fertility rates, while an increase in the working-age population percentage positively affects fertility. These findings highlight the significant impact of demographic and educational shifts on the nation's fertility trends. Understanding these dynamics is crucial for developing policies that address the challenges and opportunities of an evolving society."
+abstract: "This paper investigates the relationship between the aging population rate, educational attainment, and fertility rates in the United States over a thirty-year period from 1990 to 2020. Data from the United Nations and the World Bank shows that higher educational attainment is associated with lower fertility rates, while an increase in the working-age population percentage positively affects fertility. These findings highlight the impact of demographic and educational shifts on the nation's fertility trends."
 format: pdf
 number-sections: true
 toc: true
@@ -32,15 +32,13 @@ library(zoo)
 
 In the last three decades, the United States has experienced significant demographic transformations characterized by an aging population and rising levels of educational attainment. This study delves into the relationship between these two pivotal trends and their collective impact on fertility rates from 1990 to 2020. By utilizing data from the United Nations and the World Bank, the research examines how the rate of population aging and the increasing educational achievements within the society have influenced fertility decisions. The investigation addresses a critical gap in understanding the dual influence of demographic aging and educational elevation on fertility dynamics.
 
-The findings of this study are revealing. Analysis through a linear regression model indicates a distinct inverse relationship between the fertility rate and educational attainment: as the average level of education rises, fertility rates tend to decline. This trend suggests that higher education may contribute to delayed family planning and a reduction in the number of children per family. Additionally, this paper reveals that the increase in the working-age population percentage is positively associated with higher fertility rates. This correlation implies that, conversely, an aging population tends to have a negative impact on fertility rates.
+Our estimand is the effect of the aging population rate and educational attainment on fertility rates in the United States from 1990 to 2020. We seek to quantify how shifts in the demographic composition, particularly the proportion within the working-age bracket, alongside rising levels of education, impact the number of children born per woman. This focus is pivotal to our analysis, enabling us to elucidate the interplay between demographic aging, educational progress, and fertility trends.
+
+We find a distinct inverse relationship between the fertility rate and educational attainment: as the average level of education rises, fertility rates tend to decline. This trend suggests that higher education may contribute to delayed family planning and a reduction in the number of children per family. Additionally, this paper reveals that the increase in the working-age population percentage is positively associated with higher fertility rates. This correlation implies that, conversely, an aging population tends to have a negative impact on fertility rates.
 
 This paper advocates for targeted policy interventions to mitigate the potential socioeconomic challenges posed by these trends. Recommendations include the development of policies that support work-life balance, enabling individuals to pursue higher education and career goals without forgoing family aspirations. Furthermore, the paper underscores the necessity for social policies that address the needs of an aging population, ensuring sustainable demographic and economic growth.
 
-The paper is organized into sections covering [Data], [Model], [Results], and [Discussions]. The [Data] section outlines our utilization of datasets from the United Nations and the World Bank, including our methodologies for data selection, cleaning, and the challenges encountered. The [Model] section introduces our linear regression analysis, detailing the construction and justification of the model used to examine the impact of the aging population rate and educational attainment on fertility rates. In the [Results] section, we disclose our principal discoveries, highlighting the positive impact of the working-age population percentage on fertility rates and the inverse relationship between educational attainment and fertility. Finally, the [Discussions] section melds our findings with the existing body of research, interpreting the implications of these trends and suggesting avenues for future investigations that further explore these complex relationships.
-
-## Estimand
-
-Our estimand is the effect of the aging population rate and educational attainment on fertility rates in the United States from 1990 to 2020. We seek to quantify how shifts in the demographic composition, particularly the proportion within the working-age bracket, alongside rising levels of education, impact the number of children born per woman. This focus is pivotal to our analysis, enabling us to elucidate the interplay between demographic aging, educational progress, and fertility trends.
+The paper is organized into sections covering [Data], [Model], [Results], and [Discussion]. The [Data] section outlines our datasets, including data selection, cleaning, and the challenges encountered. The [Model] section introduces our linear regression analysis, detailing the construction and justification of the model used to examine the impact of the aging population rate and educational attainment on fertility rates. In the [Results] section, we highlight our finding of the positive impact of the working-age population percentage on fertility rates and the inverse relationship between educational attainment and fertility. Finally, the [Discussion] section considers the existing body of research, interpreting the implications of these trends and suggesting avenues for future investigations that further explore these complex relationships.
 
 # Data {#sec-data}
 
@@ -50,15 +48,15 @@ This section provides an overview and analysis of datasets concerning the United
 
 The datasets utilized in this analysis are sourced from the United Nations for age distribution and fertility rates, and the World Bank for tertiary education enrollment rates. Specifically, demographic data are courtesy of the @UN_WPP2022, while education and economic data are extracted from the @WorldBankEdStats2023, respectively. These sources provide a reliable and authoritative foundation for examining changes in the United States over 1990 to 2020.
 
-## Data Clean and Processing
+## Data Cleaning and Processing
 
 The initial data processing is conducted by @OurWorldInData, a project committed to making comprehensive datasets understandable and widely accessible. @OurWorldInData had already undertaken extensive work to standardize this data for global comparability, calculate derived metrics such as per capita figures, and ensure the coherence of metadata across a variety of data types.
 
-After @OurWorldInData's processing, we further processed the data using R programming [@citeR]. This involved reading raw data files into data frames, filtering the datasets to include only the United States from 1990 to 2020 using functions from `dplyr` packages [@citeDplyr]. Additionally, we leveraged the ggplot2 package to create visual representations of these trends, such as stacked area charts for population distribution by age groups, line graphs for the fertility rate, and a line chart for tertiary education enrollment rates [@citeGgplot2]. 
+After @OurWorldInData's processing, we further processed the data using R programming [@citeR]. This involved reading raw data files into data frames, filtering the datasets to include only the United States from 1990 to 2020 using functions from `dplyr` packages [@citeDplyr]. Additionally, we used ggplot2 to create visual representations of these trends [@citeGgplot2]. 
 
 ## Measurement
 
-The datasets were collected and measured using authoritative sources, primarily the United Nations and the World Bank. The United Nations Department of Economic and Social Affairs Population Division offers detailed demographic data, including age distribution and fertility rates, through regular population surveys and censuses conducted in member countries. Similarly, the World Bank compiles education and economic indicators, such as tertiary education enrollment rates, from official national and international statistical sources. This rigorous data collection and measurement process involves data cleaning, validation, and standardization efforts to facilitate global comparability and to address discrepancies in data reporting standards across countries.
+The datasets were collected and measured using authoritative sources, primarily the United Nations and the World Bank. The United Nations Department of Economic and Social Affairs Population Division offers detailed demographic data, including age distribution and fertility rates, through regular population surveys and censuses conducted in member countries. Similarly, the World Bank compiles education and economic indicators, such as tertiary education enrollment rates, from official national and international statistical sources. This data collection and measurement process involves data cleaning, validation, and standardization efforts to facilitate global comparability and to address discrepancies in data reporting standards across countries.
 
 ## Variables of Interest
 
@@ -116,9 +114,9 @@ ggplot(filtered_data, aes(x = Year, y = Percentage, fill = AgeGroup)) +
 
 ### Education Achievements
 
-The education achievements dataset, visualized by the @fig-education-levels, presents the tertiary education enrollment rate in the United States from 1990 to 2020. Notably, the data reveals a general upward trend in enrollment rates, starting from 69.67681% in 1990 and peaking at 88.88941% in 2015, before slightly declining to 87.56766% by 2020. The dataset highlights significant growth in tertiary education participation, reflecting an increasing value placed on higher education in the U.S. over the period analyzed.
+The education achievements dataset, visualized by the @fig-education-levels, presents the tertiary education enrollment rate in the United States from 1990 to 2020. Notably, the data reveals a general upward trend in enrollment rates, starting from 70% in 1990 and peaking at 89% in 2015, before slightly declining to 88% by 2020. The dataset highlights significant growth in tertiary education participation, reflecting an increasing value placed on higher education in the U.S. over the period analyzed.
 
-There is a noticeable dip in enrollment rate to 70.50774% in 1998, following a period of steady increases. This decline is an anomaly within an otherwise consistent upward trajectory. Following this dip, the rates resumed their increase, suggesting a temporary setback rather than a long-term trend. The data underscores the fluctuating yet overall positive trajectory of tertiary education enrollment in the U.S., emphasizing the nation's emphasis on higher education as a key component of societal progress.
+There is a noticeable dip in enrollment rate to 71% in 1998, following a period of steady increases. This decline is an anomaly within an otherwise consistent upward trajectory. Following this dip, the rates resumed their increase, suggesting a temporary setback rather than a long-term trend. The data underscores the fluctuating yet overall positive trajectory of tertiary education enrollment in the U.S., emphasizing the nation's emphasis on higher education as a key component of societal progress.
 
 ```{r}
 #| echo: false
@@ -157,7 +155,7 @@ ggplot(us_education_data, aes(x = Year, y = EnrollmentRate)) +
 
 ### Fertility Rate
 
-From @fig-fertility-rate, we can see that this dataset charts the fertility rate trend in the United States from 1990 to 2020, showing the average number of children born per woman during this period. The initial rate in 1990 stood at 2.0692 children per woman, experiencing slight fluctuations through the decades, peaking at 2.1118 in 2007, and then demonstrating a notable decline to 1.6428 by 2020. This progression indicates a significant shift in family planning and societal trends, with the fertility rate decreasing below the replacement level of approximately 2.1 children per woman, which is generally considered necessary to maintain a stable population level.
+From @fig-fertility-rate, we can see that this dataset charts the fertility rate trend in the United States from 1990 to 2020, showing the average number of children born per woman during this period. The initial rate in 1990 stood at 2.07 children per woman, experiencing slight fluctuations through the decades, peaking at 2.10 in 2007, and then demonstrating a notable decline to 1.60 by 2020. This progression indicates a significant shift in family planning and societal trends, with the fertility rate decreasing below the replacement level of approximately 2.10 children per woman, which is generally considered necessary to maintain a stable population level.
 
 An interesting observation from the dataset is the steady decline in fertility rates post-2007, coinciding with the global financial crisis, suggesting potential economic influences on family planning decisions. The decline becomes more pronounced in the last decade, highlighting a trend towards smaller family sizes in the U.S. This data not only reflects changes in societal norms and economic conditions but also underscores potential long-term demographic shifts, with implications for policy, social services, and economic planning.
 
@@ -313,7 +311,6 @@ To address the identified weaknesses, future research should consider exploring 
 plot(model)
 ```
 \newpage
-
 
 # References
 
