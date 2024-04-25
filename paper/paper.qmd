@@ -108,15 +108,16 @@ ggplot(filtered_data, aes(x = Year, y = Percentage, fill = AgeGroup)) +
   labs(x = "Year",
        y = "Percentage",
        fill = "Age Group") +
-  scale_x_continuous(breaks = seq(1990, 2020, 5))
+  scale_x_continuous(breaks = seq(1990, 2020, 5)) +
+  theme(legend.position = "bottom")
 
 ```
 
 ### Education Achievements
 
-The education achievements dataset, visualized by the @fig-education-levels, presents the tertiary education enrollment rate in the United States from 1990 to 2020. Notably, the data reveals a general upward trend in enrollment rates, starting from 70% in 1990 and peaking at 89% in 2015, before slightly declining to 88% by 2020. The dataset highlights significant growth in tertiary education participation, reflecting an increasing value placed on higher education in the U.S. over the period analyzed.
+The education achievements dataset, visualized by the @fig-education-levels, presents the gross tertiary education enrollment rate in the United States from 1990 to 2020. The gross tertiary education enrollment rate is the percentage of the population in the five-year age group following secondary school who are enrolled in tertiary education, regardless of age. This dataset does not directly represent the educational attainment of the entire population, as it only accounts for those currently enrolled in tertiary education within a specific age group. Nevertheless, it can serve as an indicator of the overall educational levels in a country, providing insights into the accessibility and participation rates in higher education. 
 
-There is a noticeable dip in enrollment rate to 71% in 1998, following a period of steady increases. This decline is an anomaly within an otherwise consistent upward trajectory. Following this dip, the rates resumed their increase, suggesting a temporary setback rather than a long-term trend. The data underscores the fluctuating yet overall positive trajectory of tertiary education enrollment in the U.S., emphasizing the nation's emphasis on higher education as a key component of societal progress.
+Notably, the data reveals a general upward trend in enrollment rates, starting from 70% in 1990 and peaking at 89% in 2015, before slightly declining to 88% by 2020. The dataset highlights significant growth in tertiary education participation, reflecting an increasing value placed on higher education in the U.S. over the period analyzed. Moreover, there is a noticeable dip in enrollment rate to 71% in 1998, following a period of steady increases. This decline is an anomaly within an otherwise consistent upward trajectory. Following this dip, the rates resumed their increase, suggesting a temporary setback rather than a long-term trend. The data underscores the fluctuating yet overall positive trajectory of tertiary education enrollment in the U.S., emphasizing the nation's emphasis on higher education as a key component of societal progress.
 
 ```{r}
 #| echo: false
@@ -217,7 +218,7 @@ combined_data <- combined_data %>%
 model <- lm(FertilityRate ~ Working.Age.Percentage + EnrollmentRate, data = combined_data)
 ```
 
-## Model set-up
+## Model Setup
 
 The linear regression model we propose is designed to quantify how the working age population percentage and the tertiary education enrollment rate impact the fertility rate. The model is structured as follows:
 
