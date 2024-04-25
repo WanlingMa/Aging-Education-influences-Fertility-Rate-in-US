@@ -1,8 +1,8 @@
 ---
-title: "The Impact of Aging Population and Education Attainment on Fertility Rate in US over 1990 to 2020"
+title: "The Impact of an Aging Population and Educational Attainment on the Fertility Rate in the US From 1990 to 2020"
 author: 
   - Wanling Ma
-thanks: "Code and data are available at: https://github.com/WanlingMa/The-Impact-of-Aging-Population-and-Education-Attainment-on-Fertility-Rate-in-US-over-1990-to-2020"
+thanks: "Code and data are available at: https://github.com/WanlingMa/Aging-Education-influences-Fertility-Rate-in-US"
 date: today
 date-format: long
 abstract: "This paper investigates the relationship between the aging population rate, educational attainment, and fertility rates in the United States over a thirty-year period from 1990 to 2020. Data from the United Nations and the World Bank shows that higher educational attainment is associated with lower fertility rates, while an increase in the working-age population percentage positively affects fertility. These findings highlight the impact of demographic and educational shifts on the nation's fertility trends."

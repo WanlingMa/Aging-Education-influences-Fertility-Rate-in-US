@@ -1,8 +1,8 @@
-# The Impact of Aging Population and Education Attainment on Fertility Rate in US over 1990 to 2020
+# The Impact of an Aging Population and Educational Attainment on the Fertility Rate in the US From 1990 to 2020
 
 ## Overview
 
-This repo provides all scripts, sources, and codes to reproduce the paper **The Impact of Aging Population and Education Attainment on Fertility Rate in US over 1990 to 2020**. The dataset was retrieved from the Our World in Data.
+This repo provides all scripts, sources, and codes to reproduce the paper **The Impact of an Aging Population and Educational Attainment on the Fertility Rate in the US From 1990 to 2020**. The dataset was retrieved from the Our World in Data.
 
 ## Paper Abstract
 
